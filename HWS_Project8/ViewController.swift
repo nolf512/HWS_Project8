@@ -41,10 +41,15 @@ class ViewController: UIViewController {
         answerLabel.textAlignment = .right
         view.addSubview(answerLabel)
         
+        
+        
         //レイアウト調整
         NSLayoutConstraint.activate([
             
+            //scoreLabelのtopAnchorをlayoutMarginsGuideのtopAnchorに合わせる
             scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            
+            //scoreLabelの右端をlayoutMarginsGuideの右端に合わせる
             scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
             
             //cluesLabelのtopAnchorをscoreLabelのbottomAnchorに固定
@@ -59,7 +64,7 @@ class ViewController: UIViewController {
             //answerLabelのtopAnchorをscoreLabelのbottomAnchorに固定
             answerLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
             
-            //answerLabelの末尾をlayoutMarginsGuideの末尾から100引いた位置にする
+            //answerLabelの右端をlayoutMarginsGuideの末尾から100引いた位置にする
             answerLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -100),
             
             //answerLabelの幅をlayoutMarginsGuideの幅の40％から100引いたものにする
@@ -70,8 +75,8 @@ class ViewController: UIViewController {
             
         ])
         
-        
-        
+        cluesLabel.backgroundColor = .lightGray
+        answerLabel.backgroundColor = .cyan
         
     }
     
