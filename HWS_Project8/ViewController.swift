@@ -18,7 +18,10 @@ class ViewController: UIViewController {
     var activatedButtons = [UIButton]()
     var solutions = [String]()
     
-    var score = 0
+    var score = 0 
+    
+    
+    
     var level = 1
     
     
@@ -162,20 +165,60 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       
+       loadLevel()
 
     }
     
     @objc func letterTapped(_ sender: UIButton){
+        guard let buttonTitle = sender.titleLabel?.text else { return }
         
+        currentAnswer.text = currentAnswer.text?.appending(buttonTitle)
+        activatedButtons.append(sender)
+        sender.isHidden = true
     }
 
     @objc func submitTapped(_ sender: UIButton){
         
+        guard let answerText = currentAnswer.text else { return }
+        
+        if let solutionPosition = solutions.firstIndex(of: answerText) {
+            activatedButtons.removeAll()
+            
+            var splitAnswers = answerLabel.text?.components(separatedBy: "\n")
+            splitAnswers?[solutionPosition] = answerText
+            answerLabel.text = splitAnswers?.joined(separator: "\n")
+            
+            currentAnswer.text = ""
+            score += 1
+            
+            if  score % 7 == 0 {
+                let ac = UIAlertController(title: "Well done!", message: "Next level??", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "next", style: .default, handler: levelUp))
+                present(ac, animated: true)
+            }
+        }
+        
+    }
+
+    func levelUp(action: UIAlertAction){
+        level += 1
+        
+        solutions.removeAll(keepingCapacity: true)
+        loadView()
+        
+        for btn in letterButtons {
+            btn.isHidden = true
+        }
     }
     
     @objc func clearTapped(_ sender: UIButton){
+        currentAnswer.text = ""
         
+        for btn in activatedButtons {
+            btn.isHidden = false
+        }
+        
+        activatedButtons.removeAll()
     }
     
     func loadLevel(){
@@ -204,6 +247,16 @@ class ViewController: UIViewController {
             }
         }
         
+        cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
+        answerLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        letterButtons.shuffle()
+        
+        if letterButtons.count == letterBits.count {
+            for i in 0..<letterButtons.count {
+                letterButtons[i].setTitle(letterBits[i], for: .normal)
+            }
+        }
         
         
     }
