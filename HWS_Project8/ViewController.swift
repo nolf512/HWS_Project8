@@ -42,6 +42,7 @@ class ViewController: UIViewController {
         cluesLabel.font = UIFont.systemFont(ofSize: 24)
         cluesLabel.text = "CLUES"
         cluesLabel.numberOfLines = 0
+        cluesLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         view.addSubview(cluesLabel)
         
         answerLabel = UILabel()
@@ -50,10 +51,9 @@ class ViewController: UIViewController {
         answerLabel.text = "ANSWERS"
         answerLabel.numberOfLines = 0
         answerLabel.textAlignment = .right
+        answerLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         view.addSubview(answerLabel)
         
-        cluesLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
-        answerLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
 
         
         //textFiield
@@ -124,34 +124,36 @@ class ViewController: UIViewController {
             clear.heightAnchor.constraint(equalToConstant: 44),
 
             //buttonsView
-            buttonsView.widthAnchor.constraint(equalToConstant: 720),
-            buttonsView.heightAnchor.constraint(equalToConstant: 350),
+            buttonsView.widthAnchor.constraint(equalToConstant: 750),
+            buttonsView.heightAnchor.constraint(equalToConstant: 320),
             buttonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             buttonsView.topAnchor.constraint(equalTo: submit.bottomAnchor, constant: 20),
             buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20)
+            
             
         ])
         
         let width = 150
         let height = 80
-        
-        for row in 1..<4 {
-            for col in 1..<5 {
+
+        for row in 0..<4 {
+            for col in 0..<5 {
                 let letterButton = UIButton(type: .system)
                 letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
                 letterButton.setTitle("WWW", for: .normal)
                 letterButton.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
-                
+
                 let frame = CGRect(x: col * width, y: row * height, width: width, height: height)
+
                 letterButton.frame = frame
-                
+
                 buttonsView.addSubview(letterButton)
                 letterButtons.append(letterButton)
-                
-                
+
+
             }
-            
-            
+
+
         }
         
         
